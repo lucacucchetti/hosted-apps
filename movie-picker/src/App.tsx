@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import './App.css';
 
 function App() {
-  const [currentTitle, setCurrentTitle] = useState<string>('Replace me...');
+  const movieInput = useRef<any>(null);
+  const [currentTitle, setCurrentTitle] = useState<string>('');
   const [movieChoices, setMovieChoices] = useState<string[]>([]);
   const [chosenMovieIndex, setChosenMovieIndex] = useState<number | undefined>();
 
@@ -17,18 +18,30 @@ function App() {
     setMovieChoices(newMovieChoices);
   };
 
+  const addMovie = () => {
+    setMovieChoices([...movieChoices, currentTitle]);
+    setCurrentTitle('');
+    movieInput.current?.focus();
+  };
+
   return (
     <div className="App">
       <header className="App-header">
         <h1>Movie Picker</h1>
         <div key="new-movie-div" className="inline">
           <input
+            ref={movieInput}
+            autoFocus
             key="new-movie-input"
             type="text"
+            placeholder="Replace me..."
             value={currentTitle}
             onChange={(event) => setCurrentTitle(event.target.value)}
+            onKeyUp={(event) => event.code === 'Enter' && addMovie()}
           />
-          <button onClick={() => setMovieChoices([...movieChoices, currentTitle])}>Add movie title</button>
+          <button disabled={currentTitle === ''} onClick={addMovie}>
+            Add movie title
+          </button>
           {chosenMovieIndex !== undefined ? <h5>We will be watching {movieChoices[chosenMovieIndex]} today</h5> : null}
           {chosenMovieIndex !== undefined ? (
             <button
