@@ -16,7 +16,7 @@ export class InfraStack extends Stack {
     });
 
     new BucketDeployment(this, 'MoviePickerDeployment', {
-      sources: [Source.asset(`${__dirname}/../../movie-picker/build`)],
+      sources: [Source.asset(`${__dirname}/../../movie-picker-ui/build`)],
       destinationBucket: moviePickerBucket,
     })
   }
