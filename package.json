@@ -1,0 +1,8 @@
+{
+  "name": "hosted-apps",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "deploy": "npm --prefix movie-picker run build && npm --prefix infra run deploy"
+  }
+}
