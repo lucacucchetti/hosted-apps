@@ -4,5 +4,8 @@
   "private": true,
   "scripts": {
     "deploy": "npm --prefix movie-picker-ui run build && npm --prefix infra run deploy"
+  },
+  "devDependencies": {
+    "esbuild": "^0.15.9"
   }
 }
