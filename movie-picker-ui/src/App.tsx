@@ -1,10 +1,12 @@
 import { useRef, useState } from 'react';
 import './App.css';
 
+const localStorageMovies: string[] = JSON.parse(localStorage.getItem('cucchetti-movie-picker-movies') || '[]');
+
 function App() {
   const movieInput = useRef<any>(null);
   const [currentTitle, setCurrentTitle] = useState<string>('');
-  const [movieChoices, setMovieChoices] = useState<string[]>([]);
+  const [movieChoices, setMovieChoices] = useState<string[]>(localStorageMovies);
   const [chosenMovieIndex, setChosenMovieIndex] = useState<number | undefined>();
 
   function pickARandomMovie() {
@@ -16,10 +18,12 @@ function App() {
     const newMovieChoices = [...movieChoices];
     newMovieChoices.splice(index, 1);
     setMovieChoices(newMovieChoices);
+    localStorage.setItem('cucchetti-movie-picker-movies', JSON.stringify(newMovieChoices));
   };
 
   const addMovie = () => {
     setMovieChoices([...movieChoices, currentTitle]);
+    localStorage.setItem('cucchetti-movie-picker-movies', JSON.stringify([...movieChoices, currentTitle]));
     setCurrentTitle('');
     movieInput.current?.focus();
   };
